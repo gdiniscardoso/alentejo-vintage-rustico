@@ -20,12 +20,13 @@ function Index() {
   const next = fairs[0];
   return (
     <>
-      <section className="relative h-[80vh] min-h-[480px] overflow-hidden">
+      <section className="relative min-h-[85vh] overflow-hidden">
         <img src={hero} alt="" width={1600} height={1008} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
-        <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-5 pb-16 text-background">
-          <h1 className="text-5xl font-medium leading-none sm:text-7xl">Alentejo Vintage<br />&amp; Rústico</h1>
-          <p className="mt-4 max-w-md text-lg">{t("tagline")}</p>
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/60 to-foreground/20" />
+        <div className="relative mx-auto flex min-h-[85vh] max-w-6xl flex-col justify-end px-5 pb-12 pt-32 text-background sm:pb-16">
+          <h1 className="text-4xl font-medium leading-none sm:text-6xl lg:text-7xl">Alentejo Vintage<br />&amp; Rústico</h1>
+          <p className="mt-6 font-display text-xl sm:text-2xl">{t("welcome")}</p>
+          <p className="mt-4 max-w-2xl whitespace-pre-line text-base leading-relaxed opacity-95 sm:text-lg">{t("tagline")}</p>
           <Link to="/portfolio" className="mt-8 w-fit rounded-full bg-primary px-7 py-3 text-sm uppercase tracking-widest text-primary-foreground hover:opacity-90">{t("seeWork")}</Link>
         </div>
       </section>

@@ -5,7 +5,7 @@ import { products, site } from "@/content/site";
 import { PageTitle } from "@/components/SiteHeader";
 
 export const Route = createFileRoute("/encomendar")({
-  validateSearch: (s: Record<string, unknown>) => ({ produto: typeof s.produto === "string" ? s.produto : undefined }),
+  validateSearch: (s: Record<string, unknown>): { produto?: string } => ({ produto: typeof s["produto"] === "string" ? (s["produto"] as string) : undefined }),
   head: () => ({
     meta: [
       { title: "Encomendar — Alentejo Vintage & Rústico" },

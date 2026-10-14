@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EncomendarRouteImport } from './routes/encomendar'
+import { Route as FeirasRouteImport } from './routes/feiras'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as SobreRouteImport } from './routes/sobre'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EncomendarRoute = EncomendarRouteImport.update({
+  id: '/encomendar',
+  path: '/encomendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeirasRoute = FeirasRouteImport.update({
+  id: '/feiras',
+  path: '/feiras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/encomendar': typeof EncomendarRoute
+  '/feiras': typeof FeirasRoute
+  '/portfolio': typeof PortfolioRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/encomendar': typeof EncomendarRoute
+  '/feiras': typeof FeirasRoute
+  '/portfolio': typeof PortfolioRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/encomendar': typeof EncomendarRoute
+  '/feiras': typeof FeirasRoute
+  '/portfolio': typeof PortfolioRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/encomendar' | '/feiras' | '/portfolio' | '/sobre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/encomendar' | '/feiras' | '/portfolio' | '/sobre'
+  id: '__root__' | '/' | '/encomendar' | '/feiras' | '/portfolio' | '/sobre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EncomendarRoute: typeof EncomendarRoute
+  FeirasRoute: typeof FeirasRoute
+  PortfolioRoute: typeof PortfolioRoute
+  SobreRoute: typeof SobreRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/encomendar': {
+      id: '/encomendar'
+      path: '/encomendar'
+      fullPath: '/encomendar'
+      preLoaderRoute: typeof EncomendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feiras': {
+      id: '/feiras'
+      path: '/feiras'
+      fullPath: '/feiras'
+      preLoaderRoute: typeof FeirasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EncomendarRoute: EncomendarRoute,
+  FeirasRoute: FeirasRoute,
+  PortfolioRoute: PortfolioRoute,
+  SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

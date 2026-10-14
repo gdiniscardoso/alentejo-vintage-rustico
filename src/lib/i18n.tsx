@@ -34,7 +34,12 @@ const dict = {
 } as const;
 
 type Key = keyof typeof dict;
-const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: Key) => string }>(null!);
+// Default value keeps components working if rendered outside the provider (e.g. after hot reload).
+const Ctx = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: (k: Key) => string }>({
+  lang: "pt",
+  setLang: () => {},
+  t: (k) => dict[k].pt,
+});
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("pt");

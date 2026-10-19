@@ -25,7 +25,8 @@ function Portfolio() {
   const [avail, setAvail] = useState(false);
   const list = useMemo(() => {
     let l = products.filter((p) => (cat === "all" || p.category === cat) && (!avail || p.available));
-    if (sort !== "none") l = [...l].sort((a, b) => (sort === "asc" ? a.price - b.price : b.price - a.price));
+    const pr = (x?: number) => x ?? (sort === "asc" ? Infinity : -Infinity);
+    if (sort !== "none") l = [...l].sort((a, b) => (sort === "asc" ? pr(a.price) - pr(b.price) : pr(b.price) - pr(a.price)));
     return l;
   }, [cat, sort, avail]);
 
@@ -52,12 +53,12 @@ function Portfolio() {
               <img src={p.image} alt={p.name[lang]} loading="lazy" width={800} height={1008} className="aspect-[4/5] w-full object-cover" />
               {!p.available && <span className="absolute left-3 top-3 rounded-full bg-foreground px-3 py-1 text-xs text-background">{t("sold")}</span>}
             </div>
-            <div className="flex items-center justify-between gap-3 p-5">
+            <div className="flex items-start justify-between gap-3 p-5">
               <div className="min-w-0">
                 <p className="text-xs uppercase tracking-widest text-muted-foreground">{categories[p.category][lang]}</p>
-                <h3 className="truncate text-2xl">{p.name[lang]}</h3>
+                <h3 className="text-xl leading-snug">{p.name[lang]}</h3>
               </div>
-              <p className="shrink-0 font-display text-2xl text-primary">{p.price} €</p>
+              <p className={`shrink-0 font-display text-primary ${p.price != null ? "text-2xl" : "text-sm italic"}`}>{p.price != null ? `${p.price} €` : t("onRequest")}</p>
             </div>
             {p.available && (
               <Link to="/encomendar" search={{ produto: p.id }} className="block border-t py-3 text-center text-sm uppercase tracking-widest hover:bg-secondary">{t("order")}</Link>

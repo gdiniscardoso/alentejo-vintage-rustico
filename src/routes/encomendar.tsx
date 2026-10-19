@@ -18,38 +18,71 @@ export const Route = createFileRoute("/encomendar")({
 });
 
 const field = "w-full rounded-md border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
+const DM_URL = "https://ig.me/m/alentejovintage.rustico";
+
+const copy = {
+  intro: {
+    pt: "As encomendas são feitas por mensagem privada no Instagram. É por lá que partilhamos o preço, as medidas e as opções de envio de cada peça.",
+    en: "Orders are made by private message on Instagram. That's where we share each piece's price, size and shipping options.",
+  },
+  step1: { pt: "Escolha a peça", en: "Choose the piece" },
+  step2: { pt: "Copie a mensagem", en: "Copy the message" },
+  step3: { pt: "Envie-nos no Instagram", en: "Send it to us on Instagram" },
+  copy: { pt: "Copiar mensagem", en: "Copy message" },
+  copied: { pt: "Copiada ✓", en: "Copied ✓" },
+  open: { pt: "Enviar mensagem no Instagram", en: "Message us on Instagram" },
+  msg: {
+    pt: (n: string) => `Olá! Tenho interesse na peça "${n}". Pode dizer-me o preço e as opções de envio? Obrigado(a)!`,
+    en: (n: string) => `Hi! I'm interested in the piece "${n}". Could you tell me the price and shipping options? Thank you!`,
+  },
+};
 
 function Order() {
   const { t, lang } = useI18n();
   const { produto } = Route.useSearch();
-  const [f, setF] = useState({ name: "", email: "", product: produto ?? products.find((p) => p.available)?.id ?? "", qty: 1, message: "" });
-  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF({ ...f, [k]: e.target.value });
+  const available = products.filter((p) => p.available);
+  const [id, setId] = useState(produto ?? available[0]?.id ?? "");
+  const [done, setDone] = useState(false);
+  const p = products.find((x) => x.id === id);
+  const message = copy.msg[lang](p?.name[lang] ?? "");
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const p = products.find((x) => x.id === f.product);
-    const body = `${t("name")}: ${f.name}\n${t("email")}: ${f.email}\n${t("product")}: ${p?.name[lang]} (${p?.price != null ? `${p.price} €` : t("onRequest")})\n${t("qty")}: ${f.qty}\n\n${f.message}`;
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(`${t("order")}: ${p?.name[lang]}`)}&body=${encodeURIComponent(body)}`;
+  const doCopy = async () => {
+    try { await navigator.clipboard.writeText(message); setDone(true); setTimeout(() => setDone(false), 2000); } catch { /* ignore */ }
   };
+
+  const Step = ({ n, label }: { n: number; label: string }) => (
+    <p className="mb-3 flex items-center gap-3 font-display text-xl">
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm text-primary-foreground">{n}</span>
+      {label}
+    </p>
+  );
 
   return (
     <div className="mx-auto max-w-xl px-5 py-16">
       <PageTitle>{t("order")}</PageTitle>
-      <p className="mb-8 text-center text-muted-foreground">{t("orderIntro")}</p>
-      <form onSubmit={submit} className="space-y-4">
-        <input required maxLength={100} placeholder={t("name")} value={f.name} onChange={set("name")} className={field} />
-        <input required type="email" maxLength={255} placeholder={t("email")} value={f.email} onChange={set("email")} className={field} />
-        <div className="grid grid-cols-[1fr_7rem] gap-4">
-          <select value={f.product} onChange={set("product")} className={field} aria-label={t("product")}>
-            {products.filter((p) => p.available).map((p) => (
-              <option key={p.id} value={p.id}>{p.name[lang]} — {p.price != null ? `${p.price} €` : t("onRequest")}</option>
-            ))}
+      <p className="mb-10 text-center text-muted-foreground">{copy.intro[lang]}</p>
+      <div className="space-y-8">
+        <section>
+          <Step n={1} label={copy.step1[lang]} />
+          <select value={id} onChange={(e) => setId(e.target.value)} className={field} aria-label={t("product")}>
+            {available.map((x) => <option key={x.id} value={x.id}>{x.name[lang]}</option>)}
           </select>
-          <input type="number" min={1} max={50} value={f.qty} onChange={set("qty")} className={field} aria-label={t("qty")} />
-        </div>
-        <textarea rows={4} maxLength={1000} placeholder={t("message")} value={f.message} onChange={set("message")} className={field} />
-        <button className="w-full rounded-full bg-primary py-3 text-sm uppercase tracking-widest text-primary-foreground hover:opacity-90">{t("send")}</button>
-      </form>
+          {p && <img src={p.image} alt={p.name[lang]} className="mt-4 aspect-[4/3] w-full rounded-xl border object-cover" />}
+        </section>
+        <section>
+          <Step n={2} label={copy.step2[lang]} />
+          <p className="rounded-md border bg-secondary p-4 text-sm leading-relaxed">{message}</p>
+          <button type="button" onClick={doCopy} className="mt-3 w-full rounded-full border py-3 text-sm uppercase tracking-widest hover:bg-secondary">
+            {done ? copy.copied[lang] : copy.copy[lang]}
+          </button>
+        </section>
+        <section>
+          <Step n={3} label={copy.step3[lang]} />
+          <a href={DM_URL} target="_blank" rel="noreferrer" onClick={doCopy} className="block w-full rounded-full bg-primary py-3 text-center text-sm uppercase tracking-widest text-primary-foreground hover:opacity-90">
+            {copy.open[lang]}
+          </a>
+        </section>
+      </div>
     </div>
   );
 }

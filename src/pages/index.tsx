@@ -3,7 +3,7 @@ import { ArrowRight, Instagram, Leaf, MapPin, type LucideIcon } from "lucide-rea
 import { useSeo } from "@/lib/seo";
 import hero from "@/assets/hero-home.jpg";
 import { useI18n } from "@/lib/i18n";
-import { products, fairs } from "@/content/site";
+import { products } from "@/content/site";
 
 const highlights: { icon: LucideIcon; title: { pt: string; en: string }; text: { pt: string; en: string } }[] = [
   { icon: Leaf, title: { pt: "Peças autênticas", en: "Authentic pieces" }, text: { pt: "Com história e tradição", en: "With history and tradition" } },
@@ -14,7 +14,6 @@ const highlights: { icon: LucideIcon; title: { pt: string; en: string }; text: {
 export default function Index() {
   useSeo({ title: "Alentejo Vintage & Rústico — Peças feitas à mão", description: "Garrafas decoradas e peças rústicas feitas à mão no Alentejo.", ogTitle: "Alentejo Vintage & Rústico", ogDescription: "Handcrafted bottles and rustic pieces from the Alentejo." });
   const { t, lang } = useI18n();
-  const next = fairs[0];
   return (
     <>
       <section className="relative flex min-h-[100svh] flex-col overflow-hidden">
@@ -51,15 +50,6 @@ export default function Index() {
           ))}
         </div>
       </section>
-      {next && (
-        <section className="mx-auto max-w-6xl px-5">
-          <Link to="/feiras" className="block rounded-xl bg-olive p-8 text-primary-foreground">
-            <p className="text-xs uppercase tracking-widest opacity-80">{t("nextFairs")}</p>
-            <p className="mt-2 font-display text-3xl">{next.name}</p>
-            <p className="opacity-90">{new Date(next.date).toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", { day: "numeric", month: "long" })} · {next.place}</p>
-          </Link>
-        </section>
-      )}
     </>
   );
 }

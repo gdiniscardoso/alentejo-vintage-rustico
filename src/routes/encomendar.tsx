@@ -28,7 +28,7 @@ function Order() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const p = products.find((x) => x.id === f.product);
-    const body = `${t("name")}: ${f.name}\n${t("email")}: ${f.email}\n${t("product")}: ${p?.name[lang]} (${p?.price} €)\n${t("qty")}: ${f.qty}\n\n${f.message}`;
+    const body = `${t("name")}: ${f.name}\n${t("email")}: ${f.email}\n${t("product")}: ${p?.name[lang]} (${p?.price != null ? `${p.price} €` : t("onRequest")})\n${t("qty")}: ${f.qty}\n\n${f.message}`;
     window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(`${t("order")}: ${p?.name[lang]}`)}&body=${encodeURIComponent(body)}`;
   };
 
@@ -42,7 +42,7 @@ function Order() {
         <div className="grid grid-cols-[1fr_7rem] gap-4">
           <select value={f.product} onChange={set("product")} className={field} aria-label={t("product")}>
             {products.filter((p) => p.available).map((p) => (
-              <option key={p.id} value={p.id}>{p.name[lang]} — {p.price} €</option>
+              <option key={p.id} value={p.id}>{p.name[lang]} — {p.price != null ? `${p.price} €` : t("onRequest")}</option>
             ))}
           </select>
           <input type="number" min={1} max={50} value={f.qty} onChange={set("qty")} className={field} aria-label={t("qty")} />

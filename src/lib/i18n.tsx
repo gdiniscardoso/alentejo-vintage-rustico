@@ -18,6 +18,7 @@ const dict = {
   sort: { pt: "Ordenar", en: "Sort" },
   priceAsc: { pt: "Preço ↑", en: "Price ↑" },
   priceDesc: { pt: "Preço ↓", en: "Price ↓" },
+  onRequest: { pt: "Sob consulta", en: "On request" },
   onlyAvail: { pt: "Só disponíveis", en: "Available only" },
   nextFairs: { pt: "Próximas feiras", en: "Upcoming fairs" },
   noFairs: { pt: "Sem feiras agendadas.", en: "No fairs scheduled." },

@@ -1,5 +1,5 @@
-import { Link, NavLink } from "react-router";
-import { useState } from "react";
+import { Link, NavLink, useLocation } from "react-router";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { site } from "@/content/site";
 import logo from "@/assets/logo.png";
@@ -7,33 +7,47 @@ import logo from "@/assets/logo.png";
 export function SiteHeader() {
   const { t, lang, setLang } = useI18n();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+  // On the home page the header floats over the hero image, transparent until the page is scrolled.
+  const overHero = isHome && !scrolled && !open;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const links = [
     { to: "/portfolio", label: t("portfolio") },
     { to: "/feiras", label: t("fairs") },
     { to: "/sobre", label: t("about") },
     { to: "/encomendar", label: t("order") },
   ];
+  const shadow = "drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]";
   return (
-    <header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur">
+    <header className={`${isHome ? "fixed inset-x-0" : "sticky"} top-0 z-20 border-b transition-colors ${overHero ? "border-transparent text-white" : "bg-background/90 backdrop-blur"}`}>
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
         <Link to="/" className="flex min-w-0 items-center gap-3 font-display text-xl font-semibold sm:text-2xl">
           <img src={logo} alt="Alentejo Vintage & Rústico" className="h-12 w-12 shrink-0 rounded-full sm:h-14 sm:w-14" />
-          <span className="hidden truncate sm:inline">Alentejo Vintage <span className="text-primary">&amp;</span> Rústico</span>
+          <span className={`hidden truncate sm:inline ${overHero ? shadow : ""}`}>Alentejo Vintage <span className={overHero ? "" : "text-primary"}>&amp;</span> Rústico</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {links.map((l) => (
-            <NavLink key={l.to} to={l.to} className={({ isActive }) => `text-sm uppercase tracking-widest hover:text-primary${isActive ? " text-primary" : ""}`}>
+            <NavLink key={l.to} to={l.to} className={({ isActive }) => `text-sm uppercase tracking-widest ${overHero ? `${shadow} hover:opacity-80` : "hover:text-primary"} ${isActive ? (overHero ? "border-b border-white pb-1" : "text-primary") : ""}`}>
               {l.label}
             </NavLink>
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2">
-          <div className="flex rounded-full border p-0.5 text-xs">
+          <div className={`flex rounded-full border p-0.5 text-xs ${overHero ? "border-white/70 bg-black/20" : ""}`}>
             {(["pt", "en"] as const).map((l) => (
               <button key={l} onClick={() => setLang(l)} className={`rounded-full px-2.5 py-1 uppercase ${lang === l ? "bg-primary text-primary-foreground" : ""}`}>{l}</button>
             ))}
           </div>
-          <button className="md:hidden px-2 text-2xl" aria-label="Menu" onClick={() => setOpen(!open)}>☰</button>
+          <button className={`md:hidden px-2 text-2xl ${overHero ? shadow : ""}`} aria-label="Menu" onClick={() => setOpen(!open)}>☰</button>
         </div>
       </div>
       {open && (

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { site } from "@/content/site";
+import logo from "@/assets/logo.png.asset.json";
 
 export function SiteHeader() {
   const { t, lang, setLang } = useI18n();
@@ -15,8 +16,9 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
-        <Link to="/" className="min-w-0 truncate font-display text-xl font-semibold sm:text-2xl">
-          Alentejo Vintage <span className="text-primary">&amp;</span> Rústico
+        <Link to="/" className="flex min-w-0 items-center gap-3 font-display text-xl font-semibold sm:text-2xl">
+          <img src={logo.url} alt="Alentejo Vintage & Rústico" className="h-12 w-12 shrink-0 rounded-full sm:h-14 sm:w-14" />
+          <span className="hidden truncate sm:inline">Alentejo Vintage <span className="text-primary">&amp;</span> Rústico</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {links.map((l) => (

@@ -15,7 +15,6 @@ type T = { pt: string; en: string };
 // Edit this file to customize the site content.
 export const site = {
   instagram: "https://www.instagram.com/alentejovintage.rustico/",
-  vinted: "https://www.vinted.pt/",
   email: "ola@alentejovintage.pt",
   vision: {
     pt: "Dar nova vida ao que o tempo guardou, com as mãos e a alma do Alentejo.",

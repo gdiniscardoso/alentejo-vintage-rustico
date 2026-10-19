@@ -69,8 +69,7 @@ export function SiteFooter() {
         <p className="font-display text-lg">Alentejo Vintage &amp; Rústico</p>
         <p className="text-muted-foreground">
           {t("findUs")}{" "}
-          <a href={site.instagram} target="_blank" rel="noreferrer" className="text-primary underline">Instagram</a> ·{" "}
-          <a href={site.vinted} target="_blank" rel="noreferrer" className="text-primary underline">Vinted</a>
+          <a href={site.instagram} target="_blank" rel="noreferrer" className="text-primary underline">Instagram</a>
         </p>
       </div>
     </footer>

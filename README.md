@@ -1,6 +1,6 @@
 # Alentejo Vintage Rustico
 
-I need to create a modern and responsive site for someonte who sells handfracted bottles and other itens on fairs, vinted and shares the products on instagram. It should have EN and PT languages, show a portfolio with the itens and their prices, allow to show whose are the next fairs that the seller will attend, have an About section that allows to customize a phrase caracterizing the vision and mission of the seller, a section to order the products via form. The portfolio section should have filters. The name of the page would be "Alentejo Vintage & Rústico"
+I need to create a modern and responsive site for someonte who sells handfracted bottles and other itens on fairs and shares the products on instagram. It should have EN and PT languages, show a portfolio with the itens and their prices, allow to show whose are the next fairs that the seller will attend, have an About section that allows to customize a phrase caracterizing the vision and mission of the seller, a section to order the products via form. The portfolio section should have filters. The name of the page would be "Alentejo Vintage & Rústico"
 
 This project was built with [Lovable](https://lovable.dev).
 

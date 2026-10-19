@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Bilingual (PT/EN) showcase site for "Alentejo Vintage & Rústico", a seller of handmade/vintage pieces who sells at fairs, on Vinted and via Instagram. Pages: home, portfolio (with filters/sort), upcoming fairs, about (vision/mission), and an order page. Plain React 19 SPA (Vite, React Router, Tailwind v4, shadcn/Radix UI in `src/components/ui`).
+Bilingual (PT/EN) showcase site for "Alentejo Vintage & Rústico", a seller of handmade/vintage pieces who sells at fairs, and via Instagram. Pages: home, portfolio (with filters/sort), upcoming fairs, about (vision/mission), and an order page. Plain React 19 SPA (Vite, React Router, Tailwind v4, shadcn/Radix UI in `src/components/ui`).
 
 **Branches:** `react-spa` is the plain-React rewrite. The `lovable` branch still has the TanStack Start version and syncs with Lovable, so never rewrite pushed history (no force-push, rebase, amend or squash of pushed commits; see `AGENTS.md`).
 

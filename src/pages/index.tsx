@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { ArrowRight, Instagram, Leaf, MapPin, type LucideIcon } from "lucide-react";
 import { useSeo } from "@/lib/seo";
-import hero from "@/assets/hero.jpg";
+import hero from "@/assets/hero-home.jpg";
 import { useI18n } from "@/lib/i18n";
 import { products, fairs } from "@/content/site";
 
@@ -18,14 +18,14 @@ export default function Index() {
   return (
     <>
       <section className="relative flex min-h-[100svh] flex-col overflow-hidden">
-        <img src={hero} alt="" width={1600} height={1008} className="absolute inset-0 h-full w-full object-cover object-[70%_center]" />
+        <img src={hero} alt="" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/45 to-transparent" />
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-foreground/50 to-transparent" />
         <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 pb-12 pt-32 text-white">
           <p className="font-display text-lg sm:text-xl">{t("welcome")}</p>
           <h1 className="mt-4 text-5xl font-medium leading-[1.05] sm:text-6xl lg:text-7xl">Alentejo Vintage<br />&amp; Rústico</h1>
           <p className="mt-6 max-w-md whitespace-pre-line text-sm leading-relaxed opacity-95 sm:text-base">{t("tagline")}</p>
-          <Link to="/portfolio" className="mt-8 flex w-fit items-center gap-3 rounded-sm bg-foreground px-7 py-3.5 text-sm uppercase tracking-widest text-background hover:opacity-90">{t("seeWork")} <ArrowRight className="h-4 w-4" /></Link>
+          <Link to="/portfolio" className="mt-8 flex w-fit items-center gap-3 rounded-sm bg-primary px-7 py-3.5 text-sm uppercase tracking-widest text-primary-foreground hover:opacity-90">{t("seeWork")} <ArrowRight className="h-4 w-4" /></Link>
         </div>
         <div className="relative bg-secondary text-foreground">
           <ul className="mx-auto grid max-w-6xl grid-cols-1 divide-y px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0">

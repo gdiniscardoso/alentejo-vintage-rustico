@@ -1,21 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router";
+import { useSeo } from "@/lib/seo";
 import hero from "@/assets/hero.jpg";
 import { useI18n } from "@/lib/i18n";
 import { products, fairs } from "@/content/site";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Alentejo Vintage & Rústico — Peças feitas à mão" },
-      { name: "description", content: "Garrafas decoradas e peças rústicas feitas à mão no Alentejo." },
-      { property: "og:title", content: "Alentejo Vintage & Rústico" },
-      { property: "og:description", content: "Handcrafted bottles and rustic pieces from the Alentejo." },
-    ],
-  }),
-  component: Index,
-});
-
-function Index() {
+export default function Index() {
+  useSeo({ title: "Alentejo Vintage & Rústico — Peças feitas à mão", description: "Garrafas decoradas e peças rústicas feitas à mão no Alentejo.", ogTitle: "Alentejo Vintage & Rústico", ogDescription: "Handcrafted bottles and rustic pieces from the Alentejo." });
   const { t, lang } = useI18n();
   const next = fairs[0];
   return (

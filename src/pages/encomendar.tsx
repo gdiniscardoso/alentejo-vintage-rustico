@@ -1,21 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useSearchParams } from "react-router";
+import { useSeo } from "@/lib/seo";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { products, site } from "@/content/site";
 import { PageTitle } from "@/components/SiteHeader";
-
-export const Route = createFileRoute("/encomendar")({
-  validateSearch: (s: Record<string, unknown>): { produto?: string | undefined } => ({ produto: typeof s["produto"] === "string" ? (s["produto"] as string) : undefined }),
-  head: () => ({
-    meta: [
-      { title: "Encomendar — Alentejo Vintage & Rústico" },
-      { name: "description", content: "Encomende as suas peças feitas à mão." },
-      { property: "og:title", content: "Encomendar — Alentejo Vintage & Rústico" },
-      { property: "og:description", content: "Order your handmade pieces." },
-    ],
-  }),
-  component: Order,
-});
 
 const field = "w-full rounded-md border bg-card px-4 py-3 outline-none focus:ring-2 focus:ring-ring";
 const DM_URL = "https://ig.me/m/alentejovintage.rustico";
@@ -37,9 +25,10 @@ const copy = {
   },
 };
 
-function Order() {
+export default function Order() {
+  useSeo({ title: "Encomendar — Alentejo Vintage & Rústico", description: "Encomende as suas peças feitas à mão.", ogTitle: "Encomendar — Alentejo Vintage & Rústico", ogDescription: "Order your handmade pieces." });
   const { t, lang } = useI18n();
-  const { produto } = Route.useSearch();
+  const produto = useSearchParams()[0].get("produto") ?? undefined;
   const available = products.filter((p) => p.available);
   const [id, setId] = useState(produto ?? available[0]?.id ?? "");
   const [done, setDone] = useState(false);

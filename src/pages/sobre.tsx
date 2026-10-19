@@ -1,22 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useSeo } from "@/lib/seo";
 import hero from "@/assets/hero.jpg";
 import { useI18n } from "@/lib/i18n";
 import { site } from "@/content/site";
 import { PageTitle } from "@/components/SiteHeader";
 
-export const Route = createFileRoute("/sobre")({
-  head: () => ({
-    meta: [
-      { title: "Sobre — Alentejo Vintage & Rústico" },
-      { name: "description", content: "A visão e missão por trás das nossas peças feitas à mão." },
-      { property: "og:title", content: "Sobre — Alentejo Vintage & Rústico" },
-      { property: "og:description", content: "The vision and mission behind our handmade pieces." },
-    ],
-  }),
-  component: About,
-});
-
-function About() {
+export default function About() {
+  useSeo({ title: "Sobre — Alentejo Vintage & Rústico", description: "A visão e missão por trás das nossas peças feitas à mão.", ogTitle: "Sobre — Alentejo Vintage & Rústico", ogDescription: "The vision and mission behind our handmade pieces." });
   const { t, lang } = useI18n();
   return (
     <div className="mx-auto max-w-5xl px-5 py-16">

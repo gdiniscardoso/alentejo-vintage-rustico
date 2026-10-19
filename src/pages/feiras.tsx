@@ -1,21 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useSeo } from "@/lib/seo";
 import { useI18n } from "@/lib/i18n";
 import { fairs } from "@/content/site";
 import { PageTitle } from "@/components/SiteHeader";
 
-export const Route = createFileRoute("/feiras")({
-  head: () => ({
-    meta: [
-      { title: "Próximas Feiras — Alentejo Vintage & Rústico" },
-      { name: "description", content: "Onde nos encontrar: as próximas feiras de artesanato." },
-      { property: "og:title", content: "Próximas Feiras — Alentejo Vintage & Rústico" },
-      { property: "og:description", content: "Upcoming craft fairs where you can find us." },
-    ],
-  }),
-  component: Fairs,
-});
-
-function Fairs() {
+export default function Fairs() {
+  useSeo({ title: "Próximas Feiras — Alentejo Vintage & Rústico", description: "Onde nos encontrar: as próximas feiras de artesanato.", ogTitle: "Próximas Feiras — Alentejo Vintage & Rústico", ogDescription: "Upcoming craft fairs where you can find us." });
   const { t, lang } = useI18n();
   const locale = lang === "pt" ? "pt-PT" : "en-GB";
   const today = new Date().toISOString().slice(0, 10);

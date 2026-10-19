@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { site } from "@/content/site";
@@ -12,7 +12,7 @@ export function SiteHeader() {
     { to: "/feiras", label: t("fairs") },
     { to: "/sobre", label: t("about") },
     { to: "/encomendar", label: t("order") },
-  ] as const;
+  ];
   return (
     <header className="sticky top-0 z-20 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
@@ -22,9 +22,9 @@ export function SiteHeader() {
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {links.map((l) => (
-            <Link key={l.to} to={l.to} className="text-sm uppercase tracking-widest hover:text-primary" activeProps={{ className: "text-primary" }}>
+            <NavLink key={l.to} to={l.to} className={({ isActive }) => `text-sm uppercase tracking-widest hover:text-primary${isActive ? " text-primary" : ""}`}>
               {l.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
         <div className="flex shrink-0 items-center gap-2">

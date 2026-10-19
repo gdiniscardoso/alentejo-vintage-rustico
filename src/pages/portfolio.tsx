@@ -1,24 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router";
+import { useSeo } from "@/lib/seo";
 import { useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import { products, categories, type Category } from "@/content/site";
 import { PageTitle } from "@/components/SiteHeader";
 
-export const Route = createFileRoute("/portfolio")({
-  head: () => ({
-    meta: [
-      { title: "Portfólio — Alentejo Vintage & Rústico" },
-      { name: "description", content: "Peças feitas à mão com preços: garrafas, decoração e vintage." },
-      { property: "og:title", content: "Portfólio — Alentejo Vintage & Rústico" },
-      { property: "og:description", content: "Handmade bottles, decor and vintage pieces with prices." },
-    ],
-  }),
-  component: Portfolio,
-});
-
 const chip = (on: boolean) => `rounded-full border px-4 py-1.5 text-sm ${on ? "bg-primary text-primary-foreground border-primary" : "hover:bg-secondary"}`;
 
-function Portfolio() {
+export default function Portfolio() {
+  useSeo({ title: "Portfólio — Alentejo Vintage & Rústico", description: "Peças feitas à mão com preços: garrafas, decoração e vintage.", ogTitle: "Portfólio — Alentejo Vintage & Rústico", ogDescription: "Handmade bottles, decor and vintage pieces with prices." });
   const { t, lang } = useI18n();
   const [cat, setCat] = useState<Category | "all">("all");
   const [sort, setSort] = useState<"none" | "asc" | "desc">("none");
@@ -61,7 +51,7 @@ function Portfolio() {
               <p className={`shrink-0 font-display text-primary ${p.price != null ? "text-2xl" : "text-sm italic"}`}>{p.price != null ? `${p.price} €` : t("onRequest")}</p>
             </div>
             {p.available && (
-              <Link to="/encomendar" search={{ produto: p.id }} className="block border-t py-3 text-center text-sm uppercase tracking-widest hover:bg-secondary">{t("order")}</Link>
+              <Link to={`/encomendar?produto=${encodeURIComponent(p.id)}`} className="block border-t py-3 text-center text-sm uppercase tracking-widest hover:bg-secondary">{t("order")}</Link>
             )}
           </article>
         ))}

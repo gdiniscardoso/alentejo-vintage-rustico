@@ -1,35 +1,28 @@
+import { CalendarDays } from "lucide-react";
 import { useSeo } from "@/lib/seo";
 import { useI18n } from "@/lib/i18n";
-import { fairs } from "@/content/site";
 import { PageTitle } from "@/components/SiteHeader";
 
+const copy = {
+  title: { pt: "Mais novidades em breve", en: "More news soon" },
+  text: {
+    pt: "Estamos a preparar as próximas feiras. Siga-nos no Instagram para saber onde nos vai encontrar.",
+    en: "We're preparing our next fairs. Follow us on Instagram to find out where to meet us.",
+  },
+};
+
+// Placeholder while no fairs are scheduled; the dated list lives in git history (before this change).
 export default function Fairs() {
   useSeo({ title: "Próximas Feiras — Alentejo Vintage & Rústico", description: "Onde nos encontrar: as próximas feiras de artesanato.", ogTitle: "Próximas Feiras — Alentejo Vintage & Rústico", ogDescription: "Upcoming craft fairs where you can find us." });
   const { t, lang } = useI18n();
-  const locale = lang === "pt" ? "pt-PT" : "en-GB";
-  const today = new Date().toISOString().slice(0, 10);
-  const upcoming = fairs.filter((f) => f.date >= today).sort((a, b) => a.date.localeCompare(b.date));
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
       <PageTitle>{t("nextFairs")}</PageTitle>
-      {upcoming.length === 0 && <p className="text-center text-muted-foreground">{t("noFairs")}</p>}
-      <ul className="divide-y border-y">
-        {upcoming.map((f) => {
-          const d = new Date(f.date);
-          return (
-            <li key={f.date + f.name} className="flex items-center gap-6 py-6">
-              <div className="w-20 shrink-0 text-center">
-                <p className="font-display text-4xl text-primary">{d.getDate()}</p>
-                <p className="text-xs uppercase tracking-widest">{d.toLocaleDateString(locale, { month: "short" })}</p>
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-2xl">{f.name}</h3>
-                <p className="text-muted-foreground">{f.place}</p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="flex flex-col items-center rounded-xl border bg-card px-6 py-16 text-center">
+        <CalendarDays className="h-12 w-12 text-olive" strokeWidth={1.25} />
+        <p className="mt-6 font-display text-3xl">{copy.title[lang]}</p>
+        <p className="mt-3 max-w-md text-muted-foreground">{copy.text[lang]}</p>
+      </div>
     </div>
   );
 }

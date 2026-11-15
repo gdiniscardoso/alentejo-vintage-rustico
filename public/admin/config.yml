@@ -1,0 +1,56 @@
+# Decap CMS. Edits are committed to GitHub; the deploy workflow rebuilds the site.
+backend:
+  name: github
+  repo: gdiniscardoso/alentejo-vintage-rustico
+  branch: main
+  # OAuth proxy (Cloudflare Worker, sterlingwes/decap-proxy).
+  base_url: https://alentejo-vintage-rustico-decap-proxy.alentejovintagerustico.workers.dev
+  auth_endpoint: /auth
+
+# Uncomment for local editing with `npx decap-server`:
+# local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+locale: pt
+
+collections:
+  - name: products
+    label: Peças (Portfolio)
+    label_singular: Peça
+    folder: content/products
+    extension: json
+    create: true
+    slug: "{{slug}}"
+    summary: "{{name.pt}}"
+    fields:
+      - label: Nome
+        name: name
+        widget: object
+        fields:
+          - { label: Português, name: pt, widget: string }
+          - { label: English, name: en, widget: string }
+      - label: Categoria
+        name: category
+        widget: select
+        options:
+          - { label: Louça, value: tableware }
+          - { label: Decoração, value: decor }
+          - { label: Arte, value: art }
+      - { label: Foto, name: image, widget: image }
+      - { label: "Preço (€) — vazio = preço sob consulta", name: price, widget: number, required: false, value_type: float, min: 0 }
+      - { label: Disponível, name: available, widget: boolean, default: true }
+      - { label: Adicionado em, name: added, widget: datetime, picker_utc: true, format: "YYYY-MM-DDTHH:mm:ss.SSS[Z]" }
+
+  - name: fairs
+    label: Feiras
+    label_singular: Feira
+    folder: content/fairs
+    extension: json
+    create: true
+    slug: "{{date}}-{{slug}}"
+    summary: "{{date}} — {{name}}"
+    fields:
+      - { label: Data, name: date, widget: datetime, time_format: false, format: "YYYY-MM-DD" }
+      - { label: Nome, name: name, widget: string }
+      - { label: Local, name: place, widget: string }
